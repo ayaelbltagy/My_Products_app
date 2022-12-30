@@ -19,5 +19,4 @@ class ProductDetailsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_product_details, container, false)
     }
 
-
 }
