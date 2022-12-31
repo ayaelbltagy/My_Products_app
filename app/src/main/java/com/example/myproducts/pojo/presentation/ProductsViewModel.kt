@@ -28,7 +28,7 @@ class ProductsViewModel : ViewModel() {
     val navigateToSelectedProperty: LiveData<Products> get() = _navigateToSelectedProperty
 
 
-    private fun getProductsList() = viewModelScope.launch {
+      fun getProductsList() = viewModelScope.launch {
         var response = remoteRepositoryImp.getAPIProducts()
         if (response.isSuccessful && response.body() != null) {
             _products.postValue(response.body())

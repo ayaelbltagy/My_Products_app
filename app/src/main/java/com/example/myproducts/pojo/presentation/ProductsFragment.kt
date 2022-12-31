@@ -23,7 +23,7 @@ class ProductsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View {
-
+        activity?.title = "Products List"
         binding = MainFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
