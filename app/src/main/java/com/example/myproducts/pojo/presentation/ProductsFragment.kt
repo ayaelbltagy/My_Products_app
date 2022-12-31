@@ -9,10 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.myproducts.databinding.MainFragmentBinding
 import androidx.recyclerview.widget.GridLayoutManager
-
-
+import com.example.myproducts.databinding.MainFragmentBinding
+import com.google.android.material.snackbar.Snackbar
 
 
 class ProductsFragment : Fragment() {
@@ -22,8 +21,9 @@ class ProductsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View {
-
+        savedInstanceState: Bundle?
+    ): View {
+        activity?.title = "Products List"
         binding = MainFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -40,20 +40,49 @@ class ProductsFragment : Fragment() {
         binding.productsRecycler.layoutManager = GridLayoutManager(context, 2)
         binding.productsRecycler.adapter = adapter
         viewModel.products.observe(viewLifecycleOwner, Observer {
+            binding.statusLoadingWheel.visibility = View.GONE
             if (!it.isNullOrEmpty()) {
                 // hide dialog as list is ready
-                binding.statusLoadingWheel.visibility = View.GONE
                 adapter.submitList(it)
+            } else {
+                Snackbar.make(
+                    binding.constraintLayout,
+                    "Failed to load products",
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
         })
         viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 // navigate to details
-                this.findNavController().navigate(ProductsFragmentDirections.actionProductsFragmentToProductDetailsFragment(it))
+                this.findNavController().navigate(
+                    ProductsFragmentDirections.actionProductsFragmentToProductDetailsFragment(it)
+                )
                 viewModel.displayPropertyDetailsComplete()
             }
         })
+
+      // refresh
+        binding.refreshLayout.setOnRefreshListener {
+            binding.refreshLayout.isRefreshing = false
+            viewModel.products.observe(viewLifecycleOwner, Observer {
+                binding.statusLoadingWheel.visibility = View.GONE
+                if (!it.isNullOrEmpty()) {
+                    // hide dialog as list is ready
+                    adapter.submitList(it)
+                } else {
+                    Snackbar.make(
+                        binding.constraintLayout,
+                        "Failed to load products",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            })
+
+        }
+
     }
+
     override fun onResume() {
         super.onResume()
         // to handle back button press
@@ -63,7 +92,6 @@ class ProductsFragment : Fragment() {
             activity?.finish()
             false
         }
-
 
     }
 }

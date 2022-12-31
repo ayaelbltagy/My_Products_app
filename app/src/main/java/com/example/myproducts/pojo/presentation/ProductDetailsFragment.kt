@@ -41,6 +41,7 @@ class ProductDetailsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ProductsViewModel::class.java)
         val product = ProductDetailsFragmentArgs.fromBundle(requireArguments()).oneProduct
+        activity?.title = product.title
         binding.title.text = product.title
         binding.price.text = product.price.toString()
         binding.desc.text = product.description
