@@ -1,6 +1,7 @@
 package com.example.myproducts.pojo.presentation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,10 +30,18 @@ class ProductsViewModel : ViewModel() {
 
 
       fun getProductsList() = viewModelScope.launch {
-        var response = remoteRepositoryImp.getAPIProducts()
-        if (response.isSuccessful && response.body() != null) {
-            _products.postValue(response.body())
-        }
+          try {
+              var response = remoteRepositoryImp.getAPIProducts()
+              if (response.isSuccessful && response.body() != null) {
+                  _products.postValue(response.body())
+              }
+          }
+          catch (ex: Exception) {
+              // in case failed connection or server error
+              Log.i("testsize","test")
+              _products.value = emptyList()
+          }
+
     }
 
     fun displayPropertyDetails(product: Products) {
