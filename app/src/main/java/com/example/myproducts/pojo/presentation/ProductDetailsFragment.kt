@@ -15,6 +15,8 @@ class ProductDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        //val productId = ProductDetailsFragmentArgs.fromBundle(requireArguments()).productId
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_product_details, container, false)
     }

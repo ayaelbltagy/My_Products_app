@@ -5,12 +5,15 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.NonNull
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.example.myproducts.databinding.OneProductBinding
+import com.example.myproducts.R
+import com.example.myproducts.databinding.ProductItemBinding
 import com.example.myproducts.pojo.models.Products
 import java.util.*
 
@@ -26,11 +29,12 @@ class ProductsAdapter() : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
     }
 
 
-    inner class ViewHolder(@NonNull val itemBinding: OneProductBinding) :
+    inner class ViewHolder(@NonNull val itemBinding: ProductItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         init {
             // one item click
             itemBinding.root.setOnClickListener {
+                findNavController(fragment).navigate(R.id.action_productsFragment_to_productDetailsFragment)
 
             }
 
@@ -39,7 +43,7 @@ class ProductsAdapter() : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = OneProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
