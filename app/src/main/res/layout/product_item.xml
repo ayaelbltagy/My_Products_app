@@ -3,10 +3,25 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <!-- to observe on model -->
+        <variable
+            name="product"
+            type="com.example.myproducts.pojo.models.Products" />
+
+        <!-- to observe on item adapter for each item -->
+        <variable
+            name="clickListener"
+            type="com.example.myproducts.pojo.presentation.AdapterClickListener" />
+    </data>
+
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#e6e6e6"
+        android:onClick="@{() -> clickListener.onItemClick(product)}"
         android:orientation="vertical"
         android:padding="1dp">
 
@@ -39,6 +54,7 @@
                 android:layout_gravity="bottom|center_horizontal">
 
                 <TextView
+                    android:text="@{product.title}"
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
@@ -58,6 +74,7 @@
                     android:layout_alignParentRight="true" />
 
                 <TextView
+                    android:text="@{product.price.toString()}"
                     android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

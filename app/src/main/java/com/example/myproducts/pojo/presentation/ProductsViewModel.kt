@@ -21,25 +21,28 @@ class ProductsViewModel : ViewModel() {
     }
 
     private var _products = MutableLiveData<List<Products>>()
-    val products : LiveData<List<Products>> get() = _products
+    val products: LiveData<List<Products>> get() = _products
 
-    // handle navigation with product object
-    private var _navigateToSelectedProduct = MutableLiveData<Products>()
-    val navigateToSelectedProduct: LiveData<Products> get() = _navigateToSelectedProduct
+    // to handle navigation
+    private var _navigateToSelectedProperty = MutableLiveData<Products>()
+    val navigateToSelectedProperty: LiveData<Products> get() = _navigateToSelectedProperty
 
-    private fun getProductsList() = viewModelScope.launch{
-       var response = remoteRepositoryImp.getAPIProducts()
-        if(response.isSuccessful && response.body() != null){
+
+    private fun getProductsList() = viewModelScope.launch {
+        var response = remoteRepositoryImp.getAPIProducts()
+        if (response.isSuccessful && response.body() != null) {
             _products.postValue(response.body())
         }
     }
 
-    fun displayProductDetails(product: Products) {
-        _navigateToSelectedProduct.value = product
+    fun displayPropertyDetails(product: Products) {
+        _navigateToSelectedProperty.value = product
     }
 
     @SuppressLint("NullSafeMutableLiveData")
-    fun displayProductDetailsComplete() {
-        _navigateToSelectedProduct.value = null
+    fun displayPropertyDetailsComplete() {
+        _navigateToSelectedProperty.value = null
     }
+
+
 }

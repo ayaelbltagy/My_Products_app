@@ -5,41 +5,22 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.NonNull
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.example.myproducts.R
 import com.example.myproducts.databinding.ProductItemBinding
 import com.example.myproducts.pojo.models.Products
-import java.util.*
 
-class ProductsAdapter() : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
-
-    private var productsList: List<Products> = ArrayList()
-    private lateinit var fragment: ProductsFragment
-
-
-    constructor(fragment: ProductsFragment,productsList: List<Products>) : this() {
-        this.productsList = productsList
-        this.fragment = fragment
-    }
+class ProductsAdapter(val clickListener: AdapterClickListener) :
+    ListAdapter<Products, ProductsAdapter.ViewHolder>(MainAdapterCallback()) {
 
 
     inner class ViewHolder(@NonNull val itemBinding: ProductItemBinding) :
-        RecyclerView.ViewHolder(itemBinding.root) {
-        init {
-            // one item click
-            itemBinding.root.setOnClickListener {
-                findNavController(fragment).navigate(R.id.action_productsFragment_to_productDetailsFragment)
-
-            }
-
-        }
-    }
+        RecyclerView.ViewHolder(itemBinding.root)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -49,12 +30,14 @@ class ProductsAdapter() : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
 
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
-        holder.itemBinding.title.text = productsList.get(position).title
-        holder.itemBinding.price.text = productsList.get(position).price.toString()
-        holder.itemBinding.ratingBar.rating = productsList.get(position).rating.rate!!.toFloat()
 
-        Glide.with(fragment)
-            .load(productsList.get(position).image)
+        holder.itemBinding.ratingBar.rating = getItem(position).rating.rate!!.toFloat()
+        holder.itemBinding.product = getItem(position)!!
+        holder.itemBinding.clickListener = clickListener
+        holder.itemBinding.executePendingBindings()
+
+        Glide.with(holder.itemView)
+            .load(getItem(position).image)
             .listener(object : RequestListener<Drawable> {
                 override fun onResourceReady(
                     resource: Drawable?,
@@ -79,7 +62,23 @@ class ProductsAdapter() : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
     }
 
 
-    override fun getItemCount(): Int {
-        return  productsList.size
+}
+
+class MainAdapterCallback : DiffUtil.ItemCallback<Products>() {
+    override fun areItemsTheSame(oldItem: Products, newItem: Products): Boolean {
+        return oldItem === newItem
+    }
+
+    override fun areContentsTheSame(oldItem: Products, newItem: Products): Boolean {
+        return oldItem.id == newItem.id
     }
 }
+
+class AdapterClickListener(val clickListener: (oneProduct: Products) -> Unit) {
+    fun onItemClick(oneProduct: Products) = clickListener(oneProduct)
+}
+
+
+
+
+

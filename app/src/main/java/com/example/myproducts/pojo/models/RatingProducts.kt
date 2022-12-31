@@ -1,9 +1,11 @@
 package com.example.myproducts.pojo.models
 
-import com.google.gson.annotations.SerializedName
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class RatingProducts(
-    @SerializedName("rate"  ) var rate  : Double?,
-    @SerializedName("count" ) var count : Int?
+   var rate  : Double?,
+    var count : Int?
 
-)
+): Parcelable

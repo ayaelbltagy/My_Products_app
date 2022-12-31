@@ -8,6 +8,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../Desktop/english/Shoe_store_aya_elbltagy/app/src/main/java/com/example/theshoestore/ui/views/ShoeFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Desktop/english/Shoe_store_aya_elbltagy/app/src/main/res/navigation/app_navigation.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/build.gradle">
           <value>
             <set />
@@ -159,6 +169,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/navigation/nav_graph.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/values/colors.xml">
           <value>
             <set />
           </value>

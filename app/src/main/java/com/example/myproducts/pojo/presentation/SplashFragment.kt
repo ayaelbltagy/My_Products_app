@@ -6,7 +6,6 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.myproducts.R
@@ -23,7 +22,9 @@ class SplashFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
+        activity?.actionBar?.hide()
         Handler(Looper.getMainLooper()).postDelayed({
             if (!NonCancellable.isCancelled) {
                 // navigate from splash to list

@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_splash" >
         <action
             android:id="@+id/action_splashFragment_to_productsFragment"
-            app:destination="@id/productsFragment" />
+            app:destination="@id/productsFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/productsFragment"
@@ -28,8 +30,9 @@
         android:name="com.example.myproducts.pojo.presentation.ProductDetailsFragment"
         android:label="fragment_product_details"
         tools:layout="@layout/fragment_product_details" >
+
         <argument
-            android:name="product_id"
-            app:argType="string" />
+            android:name="oneProduct"
+            app:argType="com.example.myproducts.pojo.models.Products" />
     </fragment>
 </navigation>

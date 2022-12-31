@@ -1,13 +1,15 @@
 package com.example.myproducts.pojo.models
 
-import com.google.gson.annotations.SerializedName
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Products(
-    @SerializedName("id"          ) var id          : Int?,
-    @SerializedName("title"       ) var title       : String?,
-    @SerializedName("price"       ) var price       : Double?,
-    @SerializedName("description" ) var description : String?,
-    @SerializedName("category"    ) var category    : String?,
-    @SerializedName("image"       ) var image       : String?,
-    @SerializedName("rating"      ) var rating      : RatingProducts
-    )
+    var id: Int?,
+    var title: String?,
+    var price: Double?,
+    var description: String?,
+    var category: String?,
+    var image: String?,
+    var rating: RatingProducts
+) : Parcelable
